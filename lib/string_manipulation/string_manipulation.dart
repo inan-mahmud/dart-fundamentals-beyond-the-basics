@@ -55,7 +55,7 @@ bool validatedPassword(String password) {
 void main() {
   stringPadding();
   buffer();
-  print(isPhoneNumber('01842101717'));
+  print(isPhoneNumber('12345678'));
   print(isPhoneNumber('2dfds1dd3'));
   print(validatedPassword('123456A_a'));
 }
