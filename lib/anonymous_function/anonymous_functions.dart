@@ -86,5 +86,14 @@ void main() {
   //prints 0
   print(result);
 
-  
+  //default sorting is alphabetical order
+  final heavyFoods = ['tehari', 'kachchi', 'khichuri', 'ilishpolao'];
+  heavyFoods.sort();
+  print(heavyFoods);
+
+  //we want to sort using length of strings
+  heavyFoods.sort(((a, b) {
+    return a.length.compareTo(b.length);
+  }));
+  print(heavyFoods);
 }
