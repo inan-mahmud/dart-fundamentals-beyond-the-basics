@@ -191,13 +191,47 @@ void main() {
     onPressed: manager.handleButtonClick,
   );
 
-
   const cities = ['Dhaka', 'Sylhet', 'Rajshahi', 'Mymensingh'];
   // cities.forEach((city) {
   //   print(city);
   // });
 
-  ///because the anonymous function and print     
+  ///because the anonymous function and print
   ///have the same property, city a tear-off instead
   cities.forEach(print);
+
+
+//Closure
+  var counter = 0;
+  final incrementCounter = () {
+    counter++;
+  };
+
+  incrementCounter();
+  incrementCounter();
+  incrementCounter();
+  incrementCounter();
+  incrementCounter();
+  incrementCounter();
+  print(counter);
+
+  final counter1 = countingFunction();
+  final counter2 = countingFunction();
+
+  print(counter1());
+  print(counter2());
+  print(counter1());
+  print(counter1());
+  print(counter2());
+}
+
+//Closure
+// A function that counts itself
+Function countingFunction() {
+  var counter = 0;
+  final incrementCounter = () {
+    counter += 1;
+    return counter;
+  };
+  return incrementCounter;
 }
