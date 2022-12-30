@@ -17,6 +17,38 @@ Function returningFunction() {
   return () => print('hello');
 }
 
+// void callback
+// specifying the function type
+class Button {
+  final String title;
+  final void Function() onPressed;
+
+  Button({required this.title, required this.onPressed});
+}
+
+// value setter callback
+class MyWidget {
+  final void Function(double xPosition) onTouch;
+
+  MyWidget({required this.onTouch});
+}
+
+//value getter callback
+class AnotherWidget {
+  final String Function()? timeStamp;
+
+  AnotherWidget({this.timeStamp});
+}
+
+//tear-off
+class StateManager {
+  int _counter = 0;
+
+  void handleButtonClick() {
+    _counter++;
+  }
+}
+
 void main() {
   namedFunction(() {
     print("called anonymous function");
@@ -87,7 +119,15 @@ void main() {
   print(result);
 
   //default sorting is alphabetical order
-  final heavyFoods = ['tehari', 'kachchi', 'khichuri', 'ilishpolao'];
+  final heavyFoods = [
+    'tehari',
+    'kachchi',
+    'khichuri',
+    'ilishpolao',
+    'polao',
+    'nolli',
+    'nehari'
+  ];
   heavyFoods.sort();
   print(heavyFoods);
 
@@ -96,4 +136,68 @@ void main() {
     return a.length.compareTo(b.length);
   }));
   print(heavyFoods);
+
+  //combining higher order functions
+  final bigUpperHeavyFoods = heavyFoods
+      .where((food) => food.length > 6)
+      .map((food) => food.toUpperCase())
+      .toList();
+  print(bigUpperHeavyFoods);
+
+  final scores = [89, 77, 46, 93, 82, 67, 32, 88];
+  scores.sort(((a, b) => b.compareTo(a)));
+  final bGrades = scores.where(
+    (grade) => grade >= 80 && grade <= 90,
+  );
+  print(bGrades);
+
+//calling the void callback function
+  final button = Button(
+      title: 'Click',
+      onPressed: () {
+        print('clicked');
+      });
+  button.onPressed.call();
+
+  //call setter callback
+  final myWidget = MyWidget(onTouch: ((xPosition) {
+    print(xPosition);
+  }));
+  myWidget.onTouch(3.14);
+
+  //call getter callback
+  final anotherWidget = AnotherWidget(
+    timeStamp: () => DateTime.now().toIso8601String(),
+  );
+  final timeStamp = anotherWidget.timeStamp?.call();
+  print(timeStamp);
+
+  //use tear-off
+  final manager = StateManager();
+
+  /// The () parentheses at the end of handleButtonClick()
+  /// tell Dart to execute this function, but the () { }
+  /// syntax for the anonymous function tells Dart not to execute this function yet.
+  /// Dart stores it in the onPressed  property for possible execution later.
+  /// You’ve got a command to execute and a command to not execute.
+  /// These cancel each other out,
+  /// so you have an opportunity to simplify that syntax.
+
+  final myButton = Button(
+    title: 'Click me!',
+    // onPressed: () {
+    //   manager.handleButtonClick();
+    // },
+    onPressed: manager.handleButtonClick,
+  );
+
+
+  const cities = ['Dhaka', 'Sylhet', 'Rajshahi', 'Mymensingh'];
+  // cities.forEach((city) {
+  //   print(city);
+  // });
+
+  ///because the anonymous function and print     
+  ///have the same property, city a tear-off instead
+  cities.forEach(print);
 }
