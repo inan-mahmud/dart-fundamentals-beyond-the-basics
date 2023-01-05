@@ -24,13 +24,13 @@ class Point {
 }
 
 enum Day {
-  monday,
-  tuesday,
-  wednesday,
-  thursday,
-  friday,
-  saturday,
-  sunday;
+  monday("Monday"),
+  tuesday("Tuesday"),
+  wednesday("Wednesday"),
+  thursday("Thursday"),
+  friday("Friday"),
+  saturday("Saturday"),
+  sunday("Sunday");
 
   Day operator +(int days) {
     final numberOfItems = Day.values.length;
@@ -40,9 +40,20 @@ enum Day {
     return Day.values[index];
   }
 
+  //challenge 1: Better days ahead
+  Day operator -(int days) {
+    final numberOfItems = Day.values.length;
+    final index = (this.index - days) % numberOfItems;
+    return Day.values[index];
+  }
+
   Day get next {
     return this + 1;
   }
+
+  final String displayName;
+
+  const Day(this.displayName);
 }
 
 abstract class Serializable {
@@ -63,6 +74,47 @@ enum Weather implements Serializable {
       orElse: () => Weather.sunny,
     );
   }
+}
+
+mixin Describer on Enum {
+  void describe() {
+    print('This $runtimeType is a $name');
+  }
+}
+
+enum Fruit with Describer {
+  cherry,
+  peach,
+  banana,
+}
+
+enum Vegetable with Describer {
+  carrot,
+  broccoli,
+  spinach,
+}
+
+enum Default<T extends Object> {
+  font<String>('roboto'),
+  size<double>(17.0),
+  weight<int>(400);
+
+  final T value;
+  const Default(this.value);
+}
+
+//Challenge 2- Not Found, 404
+
+enum HttpResponse {
+  success(200, 'Ok'),
+  notFound(404, 'Not Found'),
+  serverError(500, 'Internal Server Error'),
+  badRequest(400, 'Bad Request');
+
+  final int code;
+  final String message;
+
+  const HttpResponse(this.code, this.message);
 }
 
 void main() {
@@ -90,6 +142,13 @@ void main() {
   final restDay = Day.saturday;
   print(restDay.next);
 
+  day = day - 1;
+  print(day.name);
+
+  day--;
+  print(day.name);
+  print(day.displayName);
+
   final weather = Weather.cloudy;
 
   String serialized = weather.serialize();
@@ -97,4 +156,14 @@ void main() {
 
   Weather deserialized = Weather.deserialize(serialized);
   print(deserialized);
+
+  final fruit = Fruit.banana;
+  final vegi = Vegetable.broccoli;
+
+  fruit.describe();
+  vegi.describe();
+
+  String defaultFont = Default.font.value;
+  double defaultSize = Default.size.value;
+  int defaultWeight = Default.weight.value;
 }
