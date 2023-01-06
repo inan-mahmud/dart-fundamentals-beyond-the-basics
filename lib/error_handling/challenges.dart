@@ -21,13 +21,19 @@ void doubleTheFun() {
 }
 
 void challenge2() {
-  isValidPostalCode(1234);
+  validatePostalCode('1212121');
 }
 
-void isValidPostalCode(int postalCode) {
-  String postalCodeString = postalCode.toString();
-  if (postalCodeString.length != 5) {
-    throw InvalidPostalCodeException('Postal Code must be of 5 digits');
+void validatePostalCode(String postalCode) {
+  try {
+    int.parse(postalCode);
+  } on FormatException {
+    throw InvalidPostalCodeException('The postal code is not valid');
+  }
+
+  if (postalCode.length != 5) {
+    throw InvalidPostalCodeException(
+        'The postal code must be of five digits long');
   }
 }
 
