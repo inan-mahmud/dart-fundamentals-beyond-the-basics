@@ -9,10 +9,6 @@ abstract class Storage {
   }
 }
 
-class LocalStorage extends Storage {
+class LocalStorage extends Storage {}
 
-}
-
-class CloudStorage extends Storage {
-  
-}
+class CloudStorage extends Storage {}

@@ -61,7 +61,7 @@ class FakeDatabase {
   void open() => print('Opening the database');
   void close() => print('Closing the database');
   String fetchData() => 'forty-two';
-   String fetchNumber() => '42';
+  String fetchNumber() => '42';
 }
 
 void handleFormatException() {

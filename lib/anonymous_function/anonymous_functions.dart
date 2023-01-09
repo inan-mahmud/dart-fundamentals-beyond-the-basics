@@ -200,7 +200,6 @@ void main() {
   ///have the same property, city a tear-off instead
   cities.forEach(print);
 
-
 //Closure
   var counter = 0;
   final incrementCounter = () {

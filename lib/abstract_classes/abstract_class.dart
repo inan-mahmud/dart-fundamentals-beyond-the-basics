@@ -46,6 +46,4 @@ void main() {
   platypus.move();
   //platypus.layEggs();
   print(platypus);
-
-  
 }

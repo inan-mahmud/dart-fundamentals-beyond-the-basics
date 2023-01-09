@@ -10,6 +10,4 @@ mixin Flyer {
   }
 }
 
-class Robin with Egglayer, Flyer {
-  
-}
+class Robin with Egglayer, Flyer {}
